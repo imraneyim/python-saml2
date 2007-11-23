@@ -1042,3 +1042,26 @@ class Signature(DsBase):
 def SignatureFromString(xml_string):
   return saml2.CreateClassFromXMLString(Signature, xml_string)
 
+
+def GetEmptySignature(canonicalization_method_algorithm=C14N_WITH_C,
+                      signature_method_algorithm=SIG_RSA_SHA1,
+                      transform_algorithm=TRANSFORM_ENVELOPED,
+                      digest_algorithm=DIGEST_SHA1):
+
+  canonicalization_method = CanonicalizationMethod(
+    algorithm=canonicalization_method_algorithm)
+  signature_method = SignatureMethod(algorithm=signature_method_algorithm)
+  transforms = Transforms(transform=Transform(algorithm=transform_algorithm))
+  digest_method = DigestMethod(algorithm=digest_algorithm)
+  reference = Reference(uri="", transforms=transforms,
+                        digest_method=digest_method,
+                        digest_value=DigestValue())
+  signed_info = SignedInfo(
+    canonicalization_method=canonicalization_method,
+    signature_method=signature_method,
+    reference=reference)
+  signature = Signature(signed_info=signed_info,
+                        signature_value=SignatureValue(),
+                        key_info=KeyInfo(key_value=KeyValue()))
+  return signature
+

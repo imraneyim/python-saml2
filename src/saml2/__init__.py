@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright (C) 2007 SIOS Technology, Inc.
+# Copyright (C) 2006 Google Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,9 +16,13 @@
 
 """Contains objects used with SAML-2."""
 
-__author__ = 'tmatsuo@sios.com (Takashi MATSUO)'
+__author__ = 'api.jscudder (Jeffrey Scudder)'
 
 """Contains base classes representing Saml elements.
+
+  These codes were originally written by Jeffrey Scudder for
+  representing Atom elements. Takashi Matsuo had added some codes, and
+  changed some.
 
   Module objective: provide data classes for Saml constructs. These
   classes hide the XML-ness of Saml and provide a set of native Python
@@ -121,6 +125,9 @@ def _CreateClassFromElementTree(target_class, tree, namespace=None, tag=None):
   else:
     return None
 
+class Error(Exception):
+  """Exception class thrown by this module."""
+  pass
 
 class ExtensionElement(object):
   """Represents extra XML elements contained in Saml classes."""
