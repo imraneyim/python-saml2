@@ -27,6 +27,8 @@ import StringIO
 import libxml2
 import xmlsec
 
+# TODO: write unittests for these methods
+
 def createID():
   ret = ""
   for i in range(40):
@@ -36,11 +38,7 @@ def createID():
 def getDateAndTime(slice=0):
   return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(time.time() + slice))
 
-# TODO:
-def verify():
-  pass
-
-def sign(xml, key_file, cert_file=None):
+def lib_init():
   # Init libxml library
   libxml2.initParser()
   libxml2.substituteEntitiesDefault(1)
@@ -60,10 +58,9 @@ def sign(xml, key_file, cert_file=None):
 
   # Init xmlsec-crypto library
   if xmlsec.cryptoInit() < 0:
-    raise(saml2.Error("Error: xmlsec-crypto initialization failed."))
+    raise(saml2.Error("Error: xmlsec-crypto initialization failed."))  
 
-  ret = sign_file(xml, key_file, cert_file)
-
+def lib_shutdown():
   # Shutdown xmlsec-crypto library
   xmlsec.cryptoShutdown()
 
@@ -73,12 +70,78 @@ def sign(xml, key_file, cert_file=None):
   # Shutdown xmlsec library
   xmlsec.shutdown()
 
+  # Shutdown LibXML2
+  libxml2.cleanupParser()
+
+def verify(xml, key_file):
+  lib_init()
+  ret = verify_xml(xml, key_file)
+  lib_shutdown()
+  return ret == 0
+
+# Verifies XML signature in xml_file using public key from key_file.
+# Returns 0 on success or a negative value if an error occurs.
+def verify_xml(xml, key_file):
+
+  doc = libxml2.parseDoc(xml)
+  if doc is None or doc.getRootElement() is None:
+    cleanup(doc)
+    raise saml2.Error("Error: unable to parse file \"%s\"" % tmpl_file)
+
+  # Find start node
+  node = xmlsec.findNode(doc.getRootElement(),
+                         xmlsec.NodeSignature, xmlsec.DSigNs)
+
+  # Create signature context, we don't need keys manager in this example
+  dsig_ctx = xmlsec.DSigCtx()
+  if dsig_ctx is None:
+    cleanup(doc)
+    raise saml2.Error("Error: failed to create signature context")
+
+  # Load public key, assuming that there is not password
+  if key_file.endswith(".der"):
+    key = xmlsec.cryptoAppKeyLoad(key_file, xmlsec.KeyDataFormatDer,
+                                  None, None, None)
+  else:
+    key = xmlsec.cryptoAppKeyLoad(key_file, xmlsec.KeyDataFormatPem,
+                                  None, None, None)
+  
+  if key is None:
+    cleanup(doc, dsig_ctx)
+    raise saml2.Error("Error: failed to load public key from \"%s\"" % key_file)
+
+  dsig_ctx.signKey = key
+
+  # Set key name to the file name, this is just an example!
+  if key.setName(key_file) < 0:
+    cleanup(doc, dsig_ctx)
+    raise saml2.Error("Error: failed to set key name for key from \"%s\"" % key_file)
+
+  # Verify signature
+  if dsig_ctx.verify(node) < 0:
+    cleanup(doc, dsig_ctx)
+    raise saml2.Error("Error: signature verify")
+
+  # Print verification result to stdout
+  if dsig_ctx.status == xmlsec.DSigStatusSucceeded:
+    ret = 0
+  else:
+    ret = -1
+
+  # Success
+  cleanup(doc, dsig_ctx)
+  return ret
+
+def sign(xml, key_file, cert_file=None):
+  lib_init()
+  ret = sign_xml(xml, key_file, cert_file)
+  lib_shutdown()
   return ret
 
 # Signs the xml_file using private key from key_file and dynamicaly
 # created enveloped signature template.
 # Returns 0 on success or a negative value if an error occurs.
-def sign_file(xml, key_file, cert_file=None):
+def sign_xml(xml, key_file, cert_file=None):
 
   # Load template
   doc = libxml2.parseDoc(xml)
@@ -128,7 +191,7 @@ def sign_file(xml, key_file, cert_file=None):
   if dsig_ctx.sign(node) < 0:
     cleanup(doc, dsig_ctx)
     raise saml2.Error("Error: signature failed")
-  
+
   # signed document to string
   ret = doc.__str__()
 
