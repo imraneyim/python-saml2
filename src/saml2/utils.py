@@ -26,6 +26,8 @@ from saml2 import saml, samlp
 import StringIO
 import libxml2
 import xmlsec
+import random
+import time
 
 # TODO: write unittests for these methods
 
