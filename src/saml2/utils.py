@@ -37,8 +37,10 @@ def createID():
     ret = ret + chr(random.randint(0, 15) + ord('a'));
   return ret
 
-def getDateAndTime(slice=0):
-  return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(time.time() + slice))
+def getDateAndTime(base=None):
+  if base is None:
+    base = time.time()
+  return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(base))
 
 def lib_init():
   # Init libxml library
