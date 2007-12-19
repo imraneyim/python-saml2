@@ -22,6 +22,7 @@ __author__ = 'tmatsuo@sios.com (Takashi MATSUO)'
 """
 
 import xmldsig as ds
+import saml2
 from saml2 import saml, samlp
 import StringIO
 import libxml2
