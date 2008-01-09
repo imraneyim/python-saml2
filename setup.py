@@ -19,7 +19,7 @@ from distutils.core import setup
 
 setup(
     name='python-saml2',
-    version='0.0.3',
+    version='0.0.5',
     description='Python client library for SAML Version 2',
     long_description = """\
 python-saml2 is a library for SAML Version 2.
