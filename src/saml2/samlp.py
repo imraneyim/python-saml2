@@ -41,13 +41,6 @@ import xmldsig as ds
 SAMLP_NAMESPACE = 'urn:oasis:names:tc:SAML:2.0:protocol'
 SAMLP_TEMPLATE = '{urn:oasis:names:tc:SAML:2.0:protocol}%s'
 
-BINDING_SOAP = 'urn:oasis:names:tc:SAML:2.0:bindings:SOAP'
-BINDING_PAOS = 'urn:oasis:names:tc:SAML:2.0:bindings:PAOS'
-BINDING_HTTP_REDIRECT = 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
-BINDING_HTTP_POST = 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST'
-BINDING_HTTP_ARTIFACT = 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact'
-BINDING_URI = 'urn:oasis:names:tc:SAML:2.0:bindings:URI'
-
 STATUS_SUCCESS = 'urn:oasis:names:tc:SAML:2.0:status:Success'
 STATUS_REQUESTER = 'urn:oasis:names:tc:SAML:2.0:status:Requester'
 STATUS_RESPONDER = 'urn:oasis:names:tc:SAML:2.0:status:Responder'

@@ -72,6 +72,13 @@ DECISION_TYPE_INDETERMINATE = "Indeterminate"
 
 V2 = "2.0"
 
+BINDING_SOAP = 'urn:oasis:names:tc:SAML:2.0:bindings:SOAP'
+BINDING_PAOS = 'urn:oasis:names:tc:SAML:2.0:bindings:PAOS'
+BINDING_HTTP_REDIRECT = 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
+BINDING_HTTP_POST = 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST'
+BINDING_HTTP_ARTIFACT = 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact'
+BINDING_URI = 'urn:oasis:names:tc:SAML:2.0:bindings:URI'
+
 def CreateClassFromXMLString(target_class, xml_string):
   """Creates an instance of the target class from the string contents.
   

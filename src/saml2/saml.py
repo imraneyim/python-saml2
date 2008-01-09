@@ -65,6 +65,9 @@ NAMEID_FORMAT_ENCRYPTED = (
 NAMEID_FORMAT_PERSISTENT = (
   "urn:oasis:names:tc:SAML:2.0:nameid-format:persistent")
 
+PROFILE_ATTRIBUTE_BASIC = (
+  "urn:oasis:names:tc:SAML:2.0:profiles:attribute:basic")
+
 URN_PASSWORD = "urn:oasis:names:tc:SAML:2.0:ac:classes:Password"
 NAME_FORMAT_UNSPECIFIED = (
   "urn:oasis:names:tc:SAML:2.0:attrnam-format:unspecified")

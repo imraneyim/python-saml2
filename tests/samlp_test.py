@@ -41,7 +41,7 @@ class AbstractRequestTest(unittest.TestCase):
     self.ar.destination = "http://www.sios.com/Destination"
     self.ar.consent = saml.CONSENT_UNSPECIFIED
     self.ar.issuer = saml.Issuer()
-    self.ar.signature = ds.SignatureFromString(saml.EMPTY_SIGNATURE)
+    self.ar.signature = ds.GetEmptySignature()
     self.ar.extensions = samlp.Extensions()
 
     new_ar = samlp.AbstractRequestFromString(self.ar.ToString())
@@ -143,7 +143,7 @@ class StatusResponseTest(unittest.TestCase):
     self.sr.destination = "http://www.sios.com/Destination"
     self.sr.consent = saml.CONSENT_UNSPECIFIED
     self.sr.issuer = saml.Issuer()
-    self.sr.signature = ds.SignatureFromString(saml.EMPTY_SIGNATURE)
+    self.sr.signature = ds.GetEmptySignature()
     self.sr.extensions = samlp.Extensions()
     self.sr.status = samlp.Status()
 
@@ -179,7 +179,7 @@ class ResponseTest(unittest.TestCase):
     self.response.destination = "http://www.sios.com/Destination"
     self.response.consent = saml.CONSENT_UNSPECIFIED
     self.response.issuer = saml.Issuer()
-    self.response.signature = ds.SignatureFromString(saml.EMPTY_SIGNATURE)
+    self.response.signature = ds.GetEmptySignature()
     self.response.extensions = samlp.Extensions()
     self.response.status = samlp.Status()
     self.response.assertion.append(saml.Assertion())
@@ -357,7 +357,7 @@ class AuthnRequestTest(unittest.TestCase):
     self.ar.destination = "http://www.sios.com/Destination"
     self.ar.consent = saml.CONSENT_UNSPECIFIED
     self.ar.issuer = saml.Issuer()
-    self.ar.signature = ds.SignatureFromString(saml.EMPTY_SIGNATURE)
+    self.ar.signature = ds.GetEmptySignature()
     self.ar.extensions = samlp.Extensions()
 
     self.ar.subject = saml.Subject()
@@ -369,7 +369,7 @@ class AuthnRequestTest(unittest.TestCase):
     self.ar.is_passive = 'true'
     self.ar.assertion_consumer_service_index = "1"
     self.ar.assertion_consumer_service_url = "http://www.sios.com/acs"
-    self.ar.protocol_binding = samlp.BINDING_HTTP_POST
+    self.ar.protocol_binding = saml2.BINDING_HTTP_POST
     self.ar.assertion_consuming_service_index = "2"
     self.ar.provider_name = "provider name"
 
@@ -394,7 +394,7 @@ class AuthnRequestTest(unittest.TestCase):
     self.assert_(new_ar.assertion_consumer_service_index == '1')
     self.assert_(new_ar.assertion_consumer_service_url ==
                  'http://www.sios.com/acs')
-    self.assert_(new_ar.protocol_binding == samlp.BINDING_HTTP_POST)
+    self.assert_(new_ar.protocol_binding == saml2.BINDING_HTTP_POST)
     self.assert_(new_ar.assertion_consuming_service_index == '2')
     self.assert_(new_ar.provider_name == "provider name")
 
@@ -421,7 +421,7 @@ class AuthnRequestTest(unittest.TestCase):
     self.assert_(new_ar.assertion_consumer_service_index == '1')
     self.assert_(new_ar.assertion_consumer_service_url ==
                  'http://www.sios.com/acs')
-    self.assert_(new_ar.protocol_binding == samlp.BINDING_HTTP_POST)
+    self.assert_(new_ar.protocol_binding == saml2.BINDING_HTTP_POST)
     self.assert_(new_ar.assertion_consuming_service_index == '2')
     self.assert_(new_ar.provider_name == "provider name")
 
@@ -439,7 +439,7 @@ class LogoutRequestTest(unittest.TestCase):
     self.lr.destination = "http://www.sios.com/Destination"
     self.lr.consent = saml.CONSENT_UNSPECIFIED
     self.lr.issuer = saml.Issuer()
-    self.lr.signature = ds.SignatureFromString(saml.EMPTY_SIGNATURE)
+    self.lr.signature = ds.GetEmptySignature()
     self.lr.extensions = samlp.Extensions()
 
     self.lr.not_on_or_after = "2007-10-14T01:05:02Z"
@@ -499,7 +499,7 @@ class LogoutResponseTest(unittest.TestCase):
     self.lr.destination = "http://www.sios.com/Destination"
     self.lr.consent = saml.CONSENT_UNSPECIFIED
     self.lr.issuer = saml.Issuer()
-    self.lr.signature = ds.SignatureFromString(saml.EMPTY_SIGNATURE)
+    self.lr.signature = ds.GetEmptySignature()
     self.lr.extensions = samlp.Extensions()
     self.lr.status = samlp.Status()
 

@@ -787,7 +787,7 @@ class DigestMethod(DsBase):
 
   def __init__(self, algorithm=None,
                extension_elements=None, extension_attributes=None, text=None):
-    """Constructor for DSAKeyValue
+    """Constructor for DigestMethod
 
     Args:
       algorithm: Algorithm attribute
