@@ -1,0 +1,14 @@
+python-saml2
+
+Description:
+  Python-saml2 is a SAML 2.0 client implementation. It can be used to
+protect a service which delegates the authentication to an Identity Provider.
+
+The projects that uses this software:
+ * Gheimdall2 http://code.google.com/p/gheimdall2/
+
+Dependencies:
+ * python-libxml2
+ * pyxmlsec
+ * elementtree or celementtree
+
